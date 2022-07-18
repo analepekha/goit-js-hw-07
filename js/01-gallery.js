@@ -20,27 +20,28 @@ const makeGallery = (galleryItems) => {
 
 markUpGallery.insertAdjacentHTML('beforeend', makeGallery(galleryItems))
 
+const backdroup = basicLightbox.create(`<img src="">`, {
+  onShow: backdroup => { window.addEventListener('keydown', onEscClick); },
+  onClose: backdroup => {window.removeEventListener('keydown', onEscClick);}
+})
+
 const clickOnImage = (event) => {
-    event.preventDefault()
-    if (event.target.classList.contains('gallery__link')) {
-    return
-    }
-    const backdroup = basicLightbox.create(`
-    <img src="${event.target.dataset.source}">`)
-   
-    backdroup.show(() => window.addEventListener('keydown', onKeyPress))
-    
-    const onKeyPress = (event) => {
-    if (event.key === 'Escape') {
-        backdroup.close(() => window.removeEventListener('keydown', onKeyPress));
-        return;
-    }
-    return;
-};
-}    
+  event.preventDefault()
+  if (event.target.nodeName !== "IMG") {
+    return 
+  }
+  backdroup.element().querySelector('img').src = event.target.dataset.source
+  backdroup.show()
+}
 
 markUpGallery.addEventListener('click', clickOnImage)
 
-console.log(galleryItems);
+const onEscClick = (event) => {
+  if (event.key === 'Escape') {
+    backdroup.close();
+    return;
+  }
+}
 
+console.log(galleryItems);
 

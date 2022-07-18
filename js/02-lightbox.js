@@ -20,11 +20,4 @@ markUpGallery.insertAdjacentHTML('beforeend', makeGallery(galleryItems))
   captionDelay: 250,
 });
 
-const descriptionOfImg = (event) => {
-    event.preventDefault()
-    if (event.target.classList.contains('gallery__image')) {
-        return gallerySimpleLightbox
-    }
-}
-
 console.log(galleryItems);
